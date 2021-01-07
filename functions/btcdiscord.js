@@ -12,7 +12,7 @@ client.on('ready', () => {
     const getdata = require('./cryptocompare.js').exportdata
     const data = getdata()
     client.guilds.cache.get('344979212278431754').members.cache.get('796480631060037642').setNickname(JSON.stringify(data.eur)+ ' EUR');
-    
+
   }
   changename()
   client.user.setActivity('prise')
@@ -25,9 +25,10 @@ client.on('message', msg => {
 })
 
 function changestatus(newstatus){
+  console.log(newstatus)
   client.user.setActivity(newstatus);
+  console.log('done')
 }
-
 
 
 

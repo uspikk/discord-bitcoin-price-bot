@@ -40,7 +40,7 @@ function getprices(){
 function getHistorical(token, date){
   return new Promise(function(resolve, reject){
     var dateObj = new Date();
-    dateObj.setDate(dateObj.getDate()-1);
+    dateObj.setDate(dateObj.getDate()-date);
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
@@ -63,13 +63,13 @@ function collectdata(){
    cryptocompare.ETHprice.eur = result.ETH.EUR;
    cryptocompare.ETHprice.btc = result.ETH.BTC;
    getHistorical('BTC', 1).then(function(result){
-    cryptocompare.BTCprice.d1 = (100*result.EUR/cryptocompare.BTCprice.eur).toFixed(2);
+    cryptocompare.BTCprice.d1 = ((cryptocompare.BTCprice.eur-result.EUR)*100/cryptocompare.BTCprice.eur).toFixed(2);
     getHistorical('BTC', 30).then(function(result){
-      cryptocompare.BTCprice.d30 = (100*result.EUR/cryptocompare.BTCprice.eur).toFixed(2);
+      cryptocompare.BTCprice.d30 = ((cryptocompare.BTCprice.eur-result.EUR)*100/cryptocompare.BTCprice.eur).toFixed(2);
       getHistorical('BTC', 7).then(function(result){
-        cryptocompare.BTCprice.d7 = (100*result.EUR/cryptocompare.BTCprice.eur).toFixed(2);
+        cryptocompare.BTCprice.d7 = ((cryptocompare.BTCprice.eur-result.EUR)*100/cryptocompare.BTCprice.eur).toFixed(2);
+        return;
       })
-      return;
     })
    })
   })
