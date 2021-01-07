@@ -14,7 +14,7 @@ client.on('ready', () => {
     client.guilds.cache.get('344979212278431754').members.cache.get('796480631060037642').setNickname(JSON.stringify(data.eur)+ ' EUR');
 
   }
-  changename()
+  setInterval(changename, 60000)
   client.user.setActivity('prise')
 });
 
