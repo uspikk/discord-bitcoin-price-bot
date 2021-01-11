@@ -24,9 +24,7 @@ client.on('message', msg => {
 })
 
 function changestatus(newstatus){
-  console.log(newstatus)
   client.user.setActivity(newstatus);
-  console.log('done')
 }
 
 
