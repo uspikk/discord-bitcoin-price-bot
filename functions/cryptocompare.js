@@ -13,8 +13,12 @@ function cryptopricehead(){
   this.HIVEprice = {
     'eur':0,
     'btc':0,
-    '1d':0,
-    '30d':0
+    'd1':0,
+    'd7':0,
+    'd30':0,
+    'btc1':0,
+    'btc7':0,
+    'btc30':0
   }
   this.ETHprice = {
     'eur':0,
@@ -29,7 +33,7 @@ let cryptocompare = new cryptopricehead();
 
 function getprices(){
   return new Promise(function(resolve, reject){
-    cc.priceMulti(['BTC', 'HIVE', 'ETH'], ['EUR', 'BTC'])
+    cc.priceMulti(['BTC', 'HIVE', 'ETH'], ['USD', 'EUR', 'BTC'])
     .then(prices => {
       resolve(prices)
     })
@@ -46,7 +50,7 @@ function getHistorical(token, date){
     var year = dateObj.getUTCFullYear();
 
     const newdate = year + "-" + month + "-" + day;
-    cc.priceHistorical(token, ['EUR', 'BTC'], new Date(newdate))
+    cc.priceHistorical(token, ['USD', 'BTC'], new Date(newdate))
     .then(prices => {
       resolve(prices)
       // -> { BTC: { USD: 997, EUR: 948.17 } }
@@ -57,18 +61,66 @@ function getHistorical(token, date){
 
 function collectdata(){
   getprices().then(function(result){
-   cryptocompare.BTCprice.eur = result.BTC.EUR;
-   cryptocompare.HIVEprice.eur = result.HIVE.EUR;
-   cryptocompare.HIVEprice.btc = result.HIVE.BTC;
-   cryptocompare.ETHprice.eur = result.ETH.EUR;
+   cryptocompare.BTCprice.eur = result.BTC.USD;
+   cryptocompare.HIVEprice.eur = result.HIVE.USD;
+    let nosats = JSON.stringify(result.HIVE.BTC)
+    let sats = ''
+    for(var i=0;i<nosats.length;i++){
+      if(nosats[i] === '0' || nosats[i] === '.') continue;
+      else{
+        sats = sats + nosats[i];
+      } 
+    }
+    sats = JSON.parse(sats)
+   cryptocompare.HIVEprice.btc = sats;
+   cryptocompare.ETHprice.eur = result.ETH.USD;
    cryptocompare.ETHprice.btc = result.ETH.BTC;
    getHistorical('BTC', 1).then(function(result){
-    cryptocompare.BTCprice.d1 = ((cryptocompare.BTCprice.eur-result.EUR)*100/cryptocompare.BTCprice.eur).toFixed(2);
+    cryptocompare.BTCprice.d1 = ((cryptocompare.BTCprice.eur-result.USD)*100/cryptocompare.BTCprice.eur).toFixed(2);
     getHistorical('BTC', 30).then(function(result){
-      cryptocompare.BTCprice.d30 = ((cryptocompare.BTCprice.eur-result.EUR)*100/cryptocompare.BTCprice.eur).toFixed(2);
+      cryptocompare.BTCprice.d30 = ((cryptocompare.BTCprice.eur-result.USD)*100/cryptocompare.BTCprice.eur).toFixed(2);
       getHistorical('BTC', 7).then(function(result){
-        cryptocompare.BTCprice.d7 = ((cryptocompare.BTCprice.eur-result.EUR)*100/cryptocompare.BTCprice.eur).toFixed(2);
-        return;
+        cryptocompare.BTCprice.d7 = ((cryptocompare.BTCprice.eur-result.USD)*100/cryptocompare.BTCprice.eur).toFixed(2);
+        getHistorical('HIVE', 1).then(function(result){
+          cryptocompare.HIVEprice.d1 = ((cryptocompare.HIVEprice.eur-result.USD)*100/cryptocompare.HIVEprice.eur).toFixed(2);
+          nosats = JSON.stringify(result.BTC)
+          sats = ''
+          for(var i=0;i<nosats.length;i++){
+            if(nosats[i] === '0' || nosats[i] === '.') continue;
+            else{
+              sats = sats + nosats[i];
+            } 
+          }
+          sats = JSON.parse(sats)
+          cryptocompare.HIVEprice.btc1 = ((cryptocompare.HIVEprice.btc-sats)*100/cryptocompare.HIVEprice.btc).toFixed(2);
+          getHistorical('HIVE', 7).then(function(result){
+            cryptocompare.HIVEprice.d7 = ((cryptocompare.HIVEprice.eur-result.USD)*100/cryptocompare.HIVEprice.eur).toFixed(2);
+            nosats = JSON.stringify(result.BTC)
+            sats = ''
+            for(var i=0;i<nosats.length;i++){
+              if(nosats[i] === '0' || nosats[i] === '.') continue;
+              else{
+                sats = sats + nosats[i];
+              } 
+            }
+            sats = JSON.parse(sats)
+            cryptocompare.HIVEprice.btc7 = ((cryptocompare.HIVEprice.btc-sats)*100/cryptocompare.HIVEprice.btc).toFixed(2);
+            getHistorical('HIVE', 30).then(function(result){
+            cryptocompare.HIVEprice.d30 = ((cryptocompare.HIVEprice.eur-result.USD)*100/cryptocompare.HIVEprice.eur).toFixed(2);
+            nosats = JSON.stringify(result.BTC)
+            sats = ''
+            for(var i=0;i<nosats.length;i++){
+              if(nosats[i] === '0' || nosats[i] === '.') continue;
+              else{
+                sats = sats + nosats[i];
+              } 
+            }
+            sats = JSON.parse(sats)
+            cryptocompare.HIVEprice.btc30 = ((cryptocompare.HIVEprice.btc-sats)*100/cryptocompare.HIVEprice.btc).toFixed(2);
+            return;
+            })
+          })
+        })
       })
     })
    })
@@ -79,10 +131,15 @@ function exportdata(){
   return cryptocompare.BTCprice
 }
 
+function exporthivedata(){
+  return cryptocompare.HIVEprice
+}
+
 
 cc.setApiKey(token)
 
 module.exports = {
   collectdata,
-  exportdata
+  exportdata,
+  exporthivedata
 }

@@ -11,11 +11,10 @@ client.on('ready', () => {
   function changename(){
     const getdata = require('./cryptocompare.js').exportdata
     const data = getdata()
-    client.guilds.cache.get('344979212278431754').members.cache.get('796480631060037642').setNickname(JSON.stringify(data.eur)+ ' EUR');
-
+    client.guilds.cache.get('344979212278431754').members.cache.get('796480631060037642').setNickname(JSON.stringify(data.eur)+ ' USD');
   }
   setInterval(changename, 60000)
-  client.user.setActivity('prise')
+  client.user.setStatus('idle')
 });
 
 client.on('message', msg => {
@@ -37,4 +36,4 @@ client.login(token);
 module.exports = {
   boot,
   changestatus
-}
+} 

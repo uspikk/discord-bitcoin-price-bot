@@ -1,6 +1,7 @@
 let config = {
   'btcdiscordtoken':'',
-  'cryptocomparetoken':''
+  'cryptocomparetoken':'',
+  'hivediscordtoken':''
 }
 
 module.exports = {
