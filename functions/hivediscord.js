@@ -23,14 +23,7 @@ client.on('message', msg => {
 function changestatus(){
   const getdata = require('./cryptocompare.js').exporthivedata
   const data = getdata()
-  let nosats = JSON.stringify(data.btc)
-  let sats = ''
-  for(var i=0;i<nosats.length;i++){
-    if(nosats[i] === '0' || nosats[i] === '.') continue;
-    else{
-      sats = sats + nosats[i];
-    } 
-  }
+  let sats = JSON.stringify(data.btc)
   if(boot === 0){
     client.guilds.cache.get('344979212278431754').members.cache.get('798057739049369640').setNickname('/ ' + JSON.stringify(data.eur)+ ' USD')
     .then(function(result){

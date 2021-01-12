@@ -64,10 +64,12 @@ function collectdata(){
    cryptocompare.BTCprice.eur = result.BTC.USD;
    cryptocompare.HIVEprice.eur = result.HIVE.USD;
     let nosats = JSON.stringify(result.HIVE.BTC)
-    let sats = ''
+    let sats = '';
+    let foundzero = false;
     for(var i=0;i<nosats.length;i++){
-      if(nosats[i] === '0' || nosats[i] === '.') continue;
+      if(nosats[i] === '0' || nosats[i] === '.' && foundzero === false) continue;
       else{
+        foundzero = true;
         sats = sats + nosats[i];
       } 
     }
@@ -83,11 +85,13 @@ function collectdata(){
         cryptocompare.BTCprice.d7 = ((cryptocompare.BTCprice.eur-result.USD)*100/cryptocompare.BTCprice.eur).toFixed(2);
         getHistorical('HIVE', 1).then(function(result){
           cryptocompare.HIVEprice.d1 = ((cryptocompare.HIVEprice.eur-result.USD)*100/cryptocompare.HIVEprice.eur).toFixed(2);
-          nosats = JSON.stringify(result.BTC)
-          sats = ''
+          let nosats = JSON.stringify(result.HIVE.BTC)
+          let sats = '';
+          let foundzero = false;
           for(var i=0;i<nosats.length;i++){
-            if(nosats[i] === '0' || nosats[i] === '.') continue;
+            if(nosats[i] === '0' || nosats[i] === '.' && foundzero === false) continue;
             else{
+              foundzero = true;
               sats = sats + nosats[i];
             } 
           }
@@ -95,11 +99,13 @@ function collectdata(){
           cryptocompare.HIVEprice.btc1 = ((cryptocompare.HIVEprice.btc-sats)*100/cryptocompare.HIVEprice.btc).toFixed(2);
           getHistorical('HIVE', 7).then(function(result){
             cryptocompare.HIVEprice.d7 = ((cryptocompare.HIVEprice.eur-result.USD)*100/cryptocompare.HIVEprice.eur).toFixed(2);
-            nosats = JSON.stringify(result.BTC)
-            sats = ''
+            let nosats = JSON.stringify(result.HIVE.BTC)
+            let sats = '';
+            let foundzero = false;
             for(var i=0;i<nosats.length;i++){
-              if(nosats[i] === '0' || nosats[i] === '.') continue;
+              if(nosats[i] === '0' || nosats[i] === '.' && foundzero === false) continue;
               else{
+                foundzero = true;
                 sats = sats + nosats[i];
               } 
             }
@@ -107,11 +113,13 @@ function collectdata(){
             cryptocompare.HIVEprice.btc7 = ((cryptocompare.HIVEprice.btc-sats)*100/cryptocompare.HIVEprice.btc).toFixed(2);
             getHistorical('HIVE', 30).then(function(result){
             cryptocompare.HIVEprice.d30 = ((cryptocompare.HIVEprice.eur-result.USD)*100/cryptocompare.HIVEprice.eur).toFixed(2);
-            nosats = JSON.stringify(result.BTC)
-            sats = ''
+            let nosats = JSON.stringify(result.HIVE.BTC)
+            let sats = '';
+            let foundzero = false;
             for(var i=0;i<nosats.length;i++){
-              if(nosats[i] === '0' || nosats[i] === '.') continue;
+              if(nosats[i] === '0' || nosats[i] === '.' && foundzero === false) continue;
               else{
+                foundzero = true;
                 sats = sats + nosats[i];
               } 
             }
