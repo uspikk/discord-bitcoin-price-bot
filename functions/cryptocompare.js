@@ -65,13 +65,14 @@ function collectdata(){
    cryptocompare.HIVEprice.eur = result.HIVE.USD;
     let nosats = JSON.stringify(result.HIVE.BTC)
     let sats = '';
-    let foundzero = false;
-    for(var i=0;i<nosats.length;i++){
-      if(nosats[i] === '0' || nosats[i] === '.' && foundzero === false) continue;
-      else{
-        foundzero = true;
-        sats = sats + nosats[i];
-      } 
+    let numberstartfrom = false;
+    for(var i=2;i<nosats.length;i++){
+      if(nosats[i] === '0' && !numberstartfrom) continue;
+      if(!numberstartfrom)numberstartfrom=i-2;
+      sats = sats + nosats[i];
+    }
+    for(var i=sats.length;i<8-numberstartfrom;i++){
+      sats = sats + '0'
     }
     sats = JSON.parse(sats)
    cryptocompare.HIVEprice.btc = sats;
@@ -87,13 +88,14 @@ function collectdata(){
           cryptocompare.HIVEprice.d1 = ((cryptocompare.HIVEprice.eur-result.USD)*100/cryptocompare.HIVEprice.eur).toFixed(2);
           let nosats = JSON.stringify(result.BTC)
           let sats = '';
-          let foundzero = false;
-          for(var i=0;i<nosats.length;i++){
-            if(nosats[i] === '0' || nosats[i] === '.' && foundzero === false) continue;
-            else{
-              foundzero = true;
-              sats = sats + nosats[i];
-            } 
+          let numberstartfrom = false;
+          for(var i=2;i<nosats.length;i++){
+            if(nosats[i] === '0' && !numberstartfrom) continue;
+            if(!numberstartfrom)numberstartfrom=i-2;
+            sats = sats + nosats[i];
+          }
+          for(var i=sats.length;i<8-numberstartfrom;i++){
+            sats = sats + '0'
           }
           sats = JSON.parse(sats)
           cryptocompare.HIVEprice.btc1 = ((cryptocompare.HIVEprice.btc-sats)*100/cryptocompare.HIVEprice.btc).toFixed(2);
@@ -101,13 +103,14 @@ function collectdata(){
             cryptocompare.HIVEprice.d7 = ((cryptocompare.HIVEprice.eur-result.USD)*100/cryptocompare.HIVEprice.eur).toFixed(2);
             let nosats = JSON.stringify(result.BTC)
             let sats = '';
-            let foundzero = false;
-            for(var i=0;i<nosats.length;i++){
-              if(nosats[i] === '0' || nosats[i] === '.' && foundzero === false) continue;
-              else{
-                foundzero = true;
-                sats = sats + nosats[i];
-              } 
+            let numberstartfrom = false;
+            for(var i=2;i<nosats.length;i++){
+              if(nosats[i] === '0' && !numberstartfrom) continue;
+              if(!numberstartfrom)numberstartfrom=i-2;
+              sats = sats + nosats[i];
+            }
+            for(var i=sats.length;i<8-numberstartfrom;i++){
+              sats = sats + '0'
             }
             sats = JSON.parse(sats)
             cryptocompare.HIVEprice.btc7 = ((cryptocompare.HIVEprice.btc-sats)*100/cryptocompare.HIVEprice.btc).toFixed(2);
@@ -115,13 +118,14 @@ function collectdata(){
             cryptocompare.HIVEprice.d30 = ((cryptocompare.HIVEprice.eur-result.USD)*100/cryptocompare.HIVEprice.eur).toFixed(2);
             let nosats = JSON.stringify(result.BTC)
             let sats = '';
-            let foundzero = false;
-            for(var i=0;i<nosats.length;i++){
-              if(nosats[i] === '0' || nosats[i] === '.' && foundzero === false) continue;
-              else{
-                foundzero = true;
-                sats = sats + nosats[i];
-              } 
+            let numberstartfrom = false;
+            for(var i=2;i<nosats.length;i++){
+              if(nosats[i] === '0' && !numberstartfrom) continue;
+              if(!numberstartfrom)numberstartfrom=i-2;
+              sats = sats + nosats[i];
+            }
+            for(var i=sats.length;i<8-numberstartfrom;i++){
+              sats = sats + '0'
             }
             sats = JSON.parse(sats)
             cryptocompare.HIVEprice.btc30 = ((cryptocompare.HIVEprice.btc-sats)*100/cryptocompare.HIVEprice.btc).toFixed(2);

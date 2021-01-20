@@ -4,12 +4,16 @@ const collectdata = require('./functions/cryptocompare.js').collectdata
 const exportdata = require('./functions/cryptocompare.js').exportdata
 const changestatus = require('./functions/btcdiscord.js').changestatus
 
+const closebtc = require('./functions/btcdiscord.js').closediscord
+const closehive = require('./functions/hivediscord.js').closediscord
+
 let displaystatus = 1;
 
 
 function bootscript(){
  setInterval(changedisplay, 30000)//30000
  setInterval(collectdata, 300000)//300000
+ setInterval(rebootdiscord, 1800000)
 }
 
 function changedisplay(){
@@ -30,6 +34,11 @@ function changedisplay(){
     displaystatus = 1;
     return;
   }
+}
+
+function rebootdiscord(){
+ closebtc();
+ closehive();
 }
 
 module.exports = {

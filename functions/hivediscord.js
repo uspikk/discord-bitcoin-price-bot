@@ -98,10 +98,20 @@ function changestatus(){
   }
 }
 
+function closediscord(){
+  client.destroy()
+  setTimeout(startdiscord, 3000)
+}
+
+function startdiscord(){
+  client.login(token)
+}
+
 
 client.login(token);
 
 module.exports = {
   boot,
-  changestatus
+  changestatus,
+  closediscord
 } 
